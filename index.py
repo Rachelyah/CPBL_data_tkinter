@@ -1,5 +1,6 @@
 '''
-cpbl
+    - 提供關注中華職棒的使用者，透過視窗快速查找指定球員的相關數據
+    - 搭配圖表分析了解球員進階數據與全聯盟平均之比較
 '''
 
 import tkinter as tk
@@ -10,7 +11,6 @@ from tkinter import messagebox
 import datasource
 from PIL import Image, ImageTk
 import ttkbootstrap as ttk
-#from ttkbootstrap import Style
 
 class Window(tk.Tk):
     def __init__(self, **kwargs):
@@ -32,22 +32,6 @@ class Window(tk.Tk):
 #----------------------------建立上層介面------------------------------------
         container = ttk.LabelFrame(self,text='球員資料',relief=tk.GROOVE,borderwidth=1)
         container.pack(fill='y',ipadx=10,ipady=10,padx=10,pady=10,expand=True)
-#-----------------------------建立查詢介面-----------------------------------
-        #建立容器元素
-        #middleFrame = ttk.LabelFrame(self,text='球員搜尋',relief=tk.GROOVE,borderwidth=1)
-
-        #建立輸入欄位
-        #search_entry = tk.Entry(self)
-        #search_entry.pack(side='top')
-        #search_entry.bind('<ButtonRelease-1>',self.on_key_release)
-
-        #輸入欄位搜尋按鈕
-        #search_btn = ttk.Button(self, text='搜尋',bootstyle='Danger',command=lambda: self.on_key_release(event=None)).pack(side='left')
-
-        #middleFrame.pack(side='top', fill='x',ipadx=10,ipady=10,padx=10,pady=10,expand=True)
-        #search_entry.bind("<KeyPress>", self.on_key_release)
-        #search_entry.bind("<FocusIn>", self.)
-
 
 #------------------------------球員個人資料、PR數據---------------------------------------
         
@@ -73,7 +57,6 @@ class Window(tk.Tk):
                 widget.destroy()
 
             data = player.list_info()
-            print(f'我需要看一下那個{data}')
             Team_info = data[1]
             Name_info = data[3]
             B_t_info = data[18]                 
@@ -227,22 +210,6 @@ class Window(tk.Tk):
         lastest_data = datasource.lastest_datetime_data()               
         self.cpblTreeView.update_content(site_datas=lastest_data)
         self.bind('<ButtonRelease-1>',info)
-
-#-----------------------------接收輸入的資料，並查詢&更新TreeView--------------------------------------
-        
-    def on_key_release(self,event):
-        search_entry = event.widget  
-        #print(search_entry)    
-        #使用者輸入的文字  
-        input_word = search_entry.get()
-        print(input_word)
-        
-        if input_word == '':                                          #如果是空的，就自動更新最新資料在TreeView
-            lastest_data = datasource.lastest_datetime_data()
-            self.cpblTreeView.update_content(lastest_data)
-        else:
-            search_data = datasource.search_sitename(word=input_word)  #如果有輸入值，就把輸入的值傳回search_sitename中查詢，並傳回結果&更新TreeView 
-            self.cpblTreeView.update_content(search_data)
 
 #-----------------------------主程式定期自動更新資料--------------------------------------
 def main():     
